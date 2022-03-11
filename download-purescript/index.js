@@ -53,7 +53,7 @@ module.exports = arch === 'x64' ? function downloadPurescript(...args) {
 			return createUnsupportedPlatformError();
 		}
 
-		return dlTar(`jp-v${DEFAULT_VERSION}/${archiveName}.tar.gz`, process.cwd(), defaultOptions);
+		return dlTar(`${DEFAULT_VERSION}/${archiveName}.tar.gz`, process.cwd(), defaultOptions);
 	} else if (argLen !== 1) {
 		const error = new RangeError(`Expected 0 or 1 argument ([<Object>]), but got ${argLen} arguments.`);
 		error.code = 'ERR_TOO_MANY_ARGS';
@@ -92,11 +92,11 @@ module.exports = arch === 'x64' ? function downloadPurescript(...args) {
 			});
 		}
 
-		if (!/^[\d.]+$/u.test(version)) {
-			return new Observable(observer => {
-				observer.error(new Error(`${VERSION_ERROR}, but got an invalid version ${inspect(version)}.`));
-			});
-		}
+		// if (!/^[\d.]+$/u.test(version)) {
+		// 	return new Observable(observer => {
+		// 		observer.error(new Error(`${VERSION_ERROR}, but got an invalid version ${inspect(version)}.`));
+		// 	});
+		// }
 	}
 
 	if (!supportedPlatforms.has(process.platform)) {
@@ -111,7 +111,7 @@ module.exports = arch === 'x64' ? function downloadPurescript(...args) {
 		});
 	}
 
-	const url = `jp-v${version || DEFAULT_VERSION}/${supportedPlatforms.get(process.platform)}.tar.gz`;
+	const url = `${version || DEFAULT_VERSION}/${supportedPlatforms.get(process.platform)}.tar.gz`;
 
 	return dlTar(url, process.cwd(), {...defaultOptions, ...options});
 } : function downloadPurescript() {
